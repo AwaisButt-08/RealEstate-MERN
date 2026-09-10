@@ -21,7 +21,7 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-  const __dirname=path.resolve();
+  // const __dirname=path.resolve();
 
 const app = express();
 
@@ -34,11 +34,11 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/listing", listingRouter);
 
-app.use(express.static(path.join(__dirname,'/client/dist')));
+// app.use(express.static(path.join(__dirname,'/client/dist')));
 
-app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname,'client','dist','index.html'));
-})
+// app.get('*',(req,res)=>{
+//   res.sendFile(path.join(__dirname,'client','dist','index.html'));
+// })
 
 // Global Error Handler (must be defined AFTER routes and BEFORE app.listen)
 app.use((err, req, res, next) => {
