@@ -10,6 +10,7 @@ dotenv.config();
 import userRoutes from "./Routes/user-routes.js";
 import authRoutes from "./Routes/auth-route.js";
 import listingRouter from "./Routes/listing.route.js";
+import path from "path"
 
 mongoose
   .connect(process.env.MONGO)
@@ -19,6 +20,8 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
+
+  const __dirname=path.resolve();
 
 const app = express();
 
@@ -30,6 +33,12 @@ app.use(cookieParser());
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/listing", listingRouter);
+
+app.use(express.static(path.join(__dirname,'/client/dist')));
+
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,'client','dist','index.html'));
+})
 
 // Global Error Handler (must be defined AFTER routes and BEFORE app.listen)
 app.use((err, req, res, next) => {
